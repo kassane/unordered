@@ -12,12 +12,12 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = optimize,
     });
-    lib.addIncludePath("include");
+    lib.addIncludePath(.{ .path = "include" });
     for (boost.include_dirs.items) |include| {
         lib.include_dirs.append(include) catch {};
     }
     // zig-pkg bypass for header-only
-    lib.addCSourceFile("test/empty.cc", cxxFlags);
+    lib.addCSourceFile(.{ .file = .{ .path = "test/empty.cc" }, .flags = cxxFlags });
 
     if (target.getAbi() == .msvc)
         lib.linkLibC()
@@ -78,9 +78,9 @@ fn buildTest(b: *std.Build, info: BuildInfo) void {
         test_exe.include_dirs.append(include) catch {};
     }
     test_exe.step.dependOn(&info.lib.step);
-    test_exe.addIncludePath("test");
-    test_exe.addIncludePath("examples");
-    test_exe.addCSourceFile(info.path, cxxFlags);
+    test_exe.addIncludePath(.{ .path = "test" });
+    test_exe.addIncludePath(.{ .path = "examples" });
+    test_exe.addCSourceFile(.{ .file = .{ .path = info.path }, .flags = cxxFlags });
     // test_exe.linkLibrary(info.lib);
     if (test_exe.target.getAbi() == .msvc)
         test_exe.linkLibC()
@@ -256,30 +256,30 @@ fn boostLibraries(b: *std.Build) *std.Build.Step.Compile {
         .sha = "237e69caf65906d0313c9b852541b07fa84a99c1",
         .fetch_enabled = true,
     });
-    lib.addCSourceFile("test/empty.cc", cxxFlags);
-    lib.addIncludePath(b.pathJoin(&.{ boostCore.path, "include/" }));
-    lib.addIncludePath(b.pathJoin(&.{ boostAlg.path, "include/" }));
-    lib.addIncludePath(b.pathJoin(&.{ boostConfig.path, "include/" }));
-    lib.addIncludePath(b.pathJoin(&.{ boostAssert.path, "include/" }));
-    lib.addIncludePath(b.pathJoin(&.{ boostFunctional.path, "include/" }));
-    lib.addIncludePath(b.pathJoin(&.{ boostMP11.path, "include/" }));
-    lib.addIncludePath(b.pathJoin(&.{ boostTraits.path, "include/" }));
-    lib.addIncludePath(b.pathJoin(&.{ boostRange.path, "include/" }));
-    lib.addIncludePath(b.pathJoin(&.{ boostPreprocessor.path, "include/" }));
-    lib.addIncludePath(b.pathJoin(&.{ boostHash.path, "include/" }));
-    lib.addIncludePath(b.pathJoin(&.{ boostDescribe.path, "include/" }));
-    lib.addIncludePath(b.pathJoin(&.{ boostMpl.path, "include/" }));
-    lib.addIncludePath(b.pathJoin(&.{ boostStaticAssert.path, "include/" }));
-    lib.addIncludePath(b.pathJoin(&.{ boostIterator.path, "include/" }));
-    lib.addIncludePath(b.pathJoin(&.{ boostMove.path, "include/" }));
-    lib.addIncludePath(b.pathJoin(&.{ boostDetail.path, "include/" }));
-    lib.addIncludePath(b.pathJoin(&.{ boostThrow.path, "include/" }));
-    lib.addIncludePath(b.pathJoin(&.{ boostTuple.path, "include/" }));
-    lib.addIncludePath(b.pathJoin(&.{ boostPredef.path, "include/" }));
-    lib.addIncludePath(b.pathJoin(&.{ boostCCheck.path, "include/" }));
-    lib.addIncludePath(b.pathJoin(&.{ boostUtil.path, "include/" }));
-    lib.addIncludePath(b.pathJoin(&.{ boostRegex.path, "include/" }));
-    lib.addIncludePath(b.pathJoin(&.{ boostEndian.path, "include/" }));
+    lib.addCSourceFile(.{ .file = .{ .path = "test/empty.cc" }, .flags = cxxFlags });
+    lib.addIncludePath(.{ .path = b.pathJoin(&.{ boostCore.path, "include/" }) });
+    lib.addIncludePath(.{ .path = b.pathJoin(&.{ boostAlg.path, "include/" }) });
+    lib.addIncludePath(.{ .path = b.pathJoin(&.{ boostConfig.path, "include/" }) });
+    lib.addIncludePath(.{ .path = b.pathJoin(&.{ boostAssert.path, "include/" }) });
+    lib.addIncludePath(.{ .path = b.pathJoin(&.{ boostFunctional.path, "include/" }) });
+    lib.addIncludePath(.{ .path = b.pathJoin(&.{ boostMP11.path, "include/" }) });
+    lib.addIncludePath(.{ .path = b.pathJoin(&.{ boostTraits.path, "include/" }) });
+    lib.addIncludePath(.{ .path = b.pathJoin(&.{ boostRange.path, "include/" }) });
+    lib.addIncludePath(.{ .path = b.pathJoin(&.{ boostPreprocessor.path, "include/" }) });
+    lib.addIncludePath(.{ .path = b.pathJoin(&.{ boostHash.path, "include/" }) });
+    lib.addIncludePath(.{ .path = b.pathJoin(&.{ boostDescribe.path, "include/" }) });
+    lib.addIncludePath(.{ .path = b.pathJoin(&.{ boostMpl.path, "include/" }) });
+    lib.addIncludePath(.{ .path = b.pathJoin(&.{ boostStaticAssert.path, "include/" }) });
+    lib.addIncludePath(.{ .path = b.pathJoin(&.{ boostIterator.path, "include/" }) });
+    lib.addIncludePath(.{ .path = b.pathJoin(&.{ boostMove.path, "include/" }) });
+    lib.addIncludePath(.{ .path = b.pathJoin(&.{ boostDetail.path, "include/" }) });
+    lib.addIncludePath(.{ .path = b.pathJoin(&.{ boostThrow.path, "include/" }) });
+    lib.addIncludePath(.{ .path = b.pathJoin(&.{ boostTuple.path, "include/" }) });
+    lib.addIncludePath(.{ .path = b.pathJoin(&.{ boostPredef.path, "include/" }) });
+    lib.addIncludePath(.{ .path = b.pathJoin(&.{ boostCCheck.path, "include/" }) });
+    lib.addIncludePath(.{ .path = b.pathJoin(&.{ boostUtil.path, "include/" }) });
+    lib.addIncludePath(.{ .path = b.pathJoin(&.{ boostRegex.path, "include/" }) });
+    lib.addIncludePath(.{ .path = b.pathJoin(&.{ boostEndian.path, "include/" }) });
 
     lib.step.dependOn(&boostCore.step);
     boostCore.step.dependOn(&boostTraits.step);
