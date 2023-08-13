@@ -25,6 +25,7 @@ pub fn build(b: *std.Build) void {
         lib.linkLibCpp();
     lib.installHeadersDirectory("include", "");
     lib.step.dependOn(&boost.step);
+    b.installArtifact(lib);
 
     if (tests) {
         buildTest(b, .{
