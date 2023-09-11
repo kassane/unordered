@@ -122,7 +122,7 @@ fn boostLibraries(b: *std.Build) *std.Build.Step.Compile {
     const boostCore = GitRepoStep.create(b, .{
         .url = "https://github.com/boostorg/core.git",
         .branch = "develop",
-        .sha = "216999e552e7f73e63c7bcc88b8ce9c179bbdbe2",
+        .sha = "5f6fe65eb227375888f7305c73767600ab7f1cf2",
         .fetch_enabled = true,
     });
     const boostAlg = GitRepoStep.create(b, .{
