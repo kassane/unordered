@@ -122,7 +122,7 @@ fn boostLibraries(b: *std.Build) *std.Build.Step.Compile {
     const boostCore = GitRepoStep.create(b, .{
         .url = "https://github.com/boostorg/core.git",
         .branch = "develop",
-        .sha = "5f6fe65eb227375888f7305c73767600ab7f1cf2",
+        .sha = "ba6360e8edcc053c226e924af86996c79494c796",
         .fetch_enabled = true,
     });
     const boostAlg = GitRepoStep.create(b, .{
@@ -134,19 +134,19 @@ fn boostLibraries(b: *std.Build) *std.Build.Step.Compile {
     const boostConfig = GitRepoStep.create(b, .{
         .url = "https://github.com/boostorg/config.git",
         .branch = "develop",
-        .sha = "a1cf5d531405e62927b0257b5cbecc66a545b508",
+        .sha = "ccff36321ff514de097a2c27a74235bfe6d9a115",
         .fetch_enabled = true,
     });
     const boostAssert = GitRepoStep.create(b, .{
         .url = "https://github.com/boostorg/assert.git",
         .branch = "develop",
-        .sha = "02256c84fd0cd58a139d9dc1b25b5019ca976ada",
+        .sha = "5227f10a99442da67415e9649be2b4d9df53b61e",
         .fetch_enabled = true,
     });
     const boostTraits = GitRepoStep.create(b, .{
         .url = "https://github.com/boostorg/type_traits.git",
         .branch = "develop",
-        .sha = "1ebd31e60eab91bd8bdc586d8df00586ecfb53e4",
+        .sha = "821c53c0b45529dca508fadc7d018fb1bb6ece21",
         .fetch_enabled = true,
     });
     const boostMP11 = GitRepoStep.create(b, .{
@@ -176,13 +176,13 @@ fn boostLibraries(b: *std.Build) *std.Build.Step.Compile {
     const boostHash = GitRepoStep.create(b, .{
         .url = "https://github.com/boostorg/container_hash.git",
         .branch = "develop",
-        .sha = "226eb066e949adbf37b220e993d64ecefeeaae99",
+        .sha = "48a306dcf236ae460d9ba55648d449ed7bea1dee",
         .fetch_enabled = true,
     });
     const boostDescribe = GitRepoStep.create(b, .{
         .url = "https://github.com/boostorg/describe.git",
         .branch = "develop",
-        .sha = "a0eafb08100eb15a57b6dae6d270c0012a56aa21",
+        .sha = "c89e4dd3db81eb4f2867b2bc965d161f51cc316c",
         .fetch_enabled = true,
     });
     const boostMpl = GitRepoStep.create(b, .{
@@ -212,7 +212,7 @@ fn boostLibraries(b: *std.Build) *std.Build.Step.Compile {
     const boostDetail = GitRepoStep.create(b, .{
         .url = "https://github.com/boostorg/detail.git",
         .branch = "develop",
-        .sha = "b75c261492862448cdc5e1c0d5900203497122d6",
+        .sha = "845567f026b6e7606b237c92aa8337a1457b672b",
         .fetch_enabled = true,
     });
     const boostThrow = GitRepoStep.create(b, .{
@@ -230,7 +230,7 @@ fn boostLibraries(b: *std.Build) *std.Build.Step.Compile {
     const boostPredef = GitRepoStep.create(b, .{
         .url = "https://github.com/boostorg/predef.git",
         .branch = "develop",
-        .sha = "e508ed842c153b5dd4858e2cdafd58d2ede418d4",
+        .sha = "614546d6fac1e68cd3511d3289736f31d5aed1eb",
         .fetch_enabled = true,
     });
     const boostCCheck = GitRepoStep.create(b, .{
@@ -242,7 +242,7 @@ fn boostLibraries(b: *std.Build) *std.Build.Step.Compile {
     const boostUtil = GitRepoStep.create(b, .{
         .url = "https://github.com/boostorg/utility.git",
         .branch = "develop",
-        .sha = "eb721609af5ba8eea53e405ae6d901718866605f",
+        .sha = "a95a4f6580c65be5861cf4c40dbf9ed64a344ee6",
         .fetch_enabled = true,
     });
     const boostEndian = GitRepoStep.create(b, .{

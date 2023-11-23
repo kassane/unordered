@@ -2,4 +2,4 @@
 /doc/pdf/
 /zig-cache/
 /zig-out/
-# /dep/
+/dep/
