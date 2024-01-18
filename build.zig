@@ -13,13 +13,13 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
     });
     lib.addIncludePath(.{ .path = "include" });
-    for (boost.include_dirs.items) |include| {
-        lib.include_dirs.append(include) catch {};
+    for (boost.root_module.include_dirs.items) |include| {
+        lib.root_module.include_dirs.append(b.allocator, include) catch {};
     }
     // zig-pkg bypass for header-only
     lib.addCSourceFile(.{ .file = .{ .path = "test/empty.cc" }, .flags = cxxFlags });
 
-    if (target.getAbi() == .msvc)
+    if (lib.rootModuleTarget().abi == .msvc)
         lib.linkLibC()
     else
         lib.linkLibCpp();
@@ -72,18 +72,18 @@ const cxxFlags: []const []const u8 = &.{
 fn buildTest(b: *std.Build, info: BuildInfo) void {
     const test_exe = b.addExecutable(.{
         .name = info.filename(),
-        .optimize = info.lib.optimize,
-        .target = info.lib.target,
+        .optimize = info.lib.root_module.optimize orelse .Debug,
+        .target = info.lib.root_module.resolved_target orelse b.host,
     });
-    for (info.lib.include_dirs.items) |include| {
-        test_exe.include_dirs.append(include) catch {};
+    for (info.lib.root_module.include_dirs.items) |include| {
+        test_exe.root_module.include_dirs.append(b.allocator, include) catch {};
     }
     test_exe.step.dependOn(&info.lib.step);
     test_exe.addIncludePath(.{ .path = "test" });
     test_exe.addIncludePath(.{ .path = "examples" });
     test_exe.addCSourceFile(.{ .file = .{ .path = info.path }, .flags = cxxFlags });
     // test_exe.linkLibrary(info.lib);
-    if (test_exe.target.getAbi() == .msvc)
+    if (test_exe.rootModuleTarget().abi == .msvc)
         test_exe.linkLibC()
     else
         test_exe.linkLibCpp();
@@ -107,7 +107,7 @@ const BuildInfo = struct {
     path: []const u8,
 
     fn filename(self: BuildInfo) []const u8 {
-        var split = std.mem.split(u8, std.fs.path.basename(self.path), ".");
+        var split = std.mem.splitSequence(u8, std.fs.path.basename(self.path), ".");
         return split.first();
     }
 };
@@ -115,7 +115,7 @@ const BuildInfo = struct {
 fn boostLibraries(b: *std.Build) *std.Build.Step.Compile {
     const lib = b.addStaticLibrary(.{
         .name = "boost",
-        .target = .{},
+        .target = b.host,
         .optimize = .ReleaseFast,
     });
 

@@ -21,7 +21,7 @@ pub const ShaCheck = enum {
     }
 };
 
-step: std.build.Step,
+step: std.Build.Step,
 url: []const u8,
 name: []const u8,
 branch: ?[]const u8 = null,
